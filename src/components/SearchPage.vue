@@ -13,6 +13,8 @@ export default {
     performSearch(query) {  
       // 在这里处理搜索逻辑，比如发送API请求  
       console.log('Searching for:', query);  
+      //后面在处理，现在先使用baidu
+      window.open(`https://www.baidu.com/s?wd=${query}`);
     },  
     handleInputChange(query) {  
       // 可以在这里处理输入框内容变化时的逻辑  
