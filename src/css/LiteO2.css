@@ -1,0 +1,85 @@
+a:link {
+    color: #F8F8FF;
+}
+
+/*超链接默认样式*/
+a:visited {
+    color: #F8F8FF;
+}
+
+/*超链接被访问后的样式*/
+a:hover {
+    color: #F5F5F5;
+}
+
+/*鼠标经过超链接的样式*/
+a:active {
+    color: #F8F8FF;
+}
+
+/*超链接被激活时的样式*/
+
+a {
+    text-decoration: none;
+    outline: none;
+    border: '0';
+}
+
+.new {
+    background-color: rgb(164, 186, 128);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    width: 50px;
+    height: 25px;
+    position: relative
+}
+
+.repair {
+    background-color: rgb(219, 198, 147);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    width: 50px;
+    height: 25px;
+    position: relative
+}
+
+.conguatulations {
+    background-color: rgb(239, 160, 67);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    width: 50px;
+    height: 25px;
+    position: relative
+}
+
+.notice {
+    color: white
+}
+
+.rebuild {
+    background-color: rgb(161, 198, 201);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    width: 50px;
+    height: 25px;
+    position: relative
+}
+
+.delete {
+    background-color: rgb(255, 0, 0);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    width: 50px;
+    height: 25px;
+    position: relative
+}
