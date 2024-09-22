@@ -1,4 +1,4 @@
-# liteo2tab
+# liteo2tab on vue
 
 ## Project setup
 ```
