@@ -24,6 +24,7 @@ export default {
 
 <template>
 <div style="height:100%">
+    <br>
     <TimeBox/><br>
 <SearchBox @search="performSearch" @input-changed="handleInputChange"/>
 </div>

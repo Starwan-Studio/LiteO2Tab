@@ -10,8 +10,35 @@
 export default {
     name: "AppFooter"
     , mounted() {
-        document.getElementsByClassName("footer")[0].style.height = document.getElementsByClassName("footer")[0].clientHeight - 15 + "px";
-        document.getElementById("footer-text").innerHTML = "&copy; 2020-"+new Date().getFullYear()+" <a href='https://space.bilibili.com/586310538?from=liteo2tab' target='_blank'>林晚晚ss.</a>";
+        if(this.isMobileDevice()){
+            document.getElementsByClassName("footer")[0].style.height = document.getElementsByClassName("footer")[0].clientHeight - 15 + "px";
+        document.getElementById("footer-text").innerHTML = "&copy; 2020-" + new Date().getFullYear() + " <a href='https://space.bilibili.com/586310538?from=liteo2tab' target='_blank'>林晚晚ss.</a> | "+'<a href="https://icp.gov.moe/?keyword=20235217" target="_blank">萌ICP备20235217号</a>';
+        }else{
+            document.getElementsByClassName("footer")[0].style.height = document.getElementsByClassName("footer")[0].clientHeight - 15 + "px";
+            fetch('https://v1.hitokoto.cn')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById("footer-text").innerHTML = "&copy; 2020-" + new Date().getFullYear() + " <a href='https://space.bilibili.com/586310538?from=liteo2tab' target='_blank'>林晚晚ss.</a>" + " | <a href=' "+`https://hitokoto.cn/?uuid=${data.uuid}` +"' target='_blank' id='hitokoto_text'>" + data.hitokoto + "</a> | "+'<a href="https://icp.gov.moe/?keyword=20235217" target="_blank">萌ICP备20235217号</a>';
+    })
+        
+        }
+    },
+    methods: {
+        isMobileDevice() {
+
+            let userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            // 移动端特有的字符串  
+            let mobileRegex = /iPhone|iPad|iPod|Android|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS|FxiOS|windows phone|MeeGo|SymbianOS|Palm|webOS|S60|Linux/i;
+
+            if (mobileRegex.test(userAgent)) {
+                return true;
+            }
+
+
+
+            return false;
+        },
     }
 }
 </script>

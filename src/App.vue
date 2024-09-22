@@ -111,7 +111,11 @@ export default {
 </style>
 
 <style>
-/* :root {
-  --swiper-theme-color: #b1d9ec !important;
-} */
+@font-face{
+  font-family: "平方时光体";
+  src: url("font/平方时光体.ttf");
+}
+:root {
+  font-family: "平方时光体";
+}
 </style>
