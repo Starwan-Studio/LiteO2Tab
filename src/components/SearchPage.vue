@@ -4,9 +4,7 @@ import SearchBox from './SearchPageComponents/SearchBox.vue'
 
 export default {
   name: 'SearchPage',
-  data() {
-
-  },components: {
+components: {
       TimeBox,SearchBox
   },
   methods: {

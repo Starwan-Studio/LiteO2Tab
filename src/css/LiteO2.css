@@ -84,3 +84,8 @@ a {
     height: 25px;
     position: relative
 }
+/*tailwind css*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
