@@ -32,6 +32,15 @@ export default {
                 inputElement.style.width = elementWidth + 'px'
             }
         })
+
+        document.querySelector('.search-box input').addEventListener('blur', () => {
+            var inputElement = document.querySelector(".search-input")
+            var elementWidth = inputElement.offsetWidth
+            var screenHalfWidth = document.body.offsetWidth / 2
+            if (elementWidth > screenHalfWidth) {
+                inputElement.style.width = elementWidth + 'px'
+            }
+        })
     }
 };
 </script>
