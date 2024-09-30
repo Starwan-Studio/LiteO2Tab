@@ -1,24 +1,7 @@
-# liteo2tab on vue
+# LiteO2 Tab
+  
+# Description
+Lite O2 Tab is a custom search page based on vue  
+The old version is based on pure html and css, at https://github.com/bil-fis/LiteO2Tab  
 
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+&copy; 晚挽饹汐工作室 | 林晚晚ss.
