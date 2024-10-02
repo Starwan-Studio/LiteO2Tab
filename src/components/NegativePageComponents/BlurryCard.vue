@@ -20,7 +20,7 @@ export default {
     border-radius: 2px;
     /* 圆角 */
     overflow: scroll;
-    background-color: rgba(255, 255, 255, 0.233);
+    background-color: rgba(170, 170, 170, 0.384);
     /* 毛玻璃效果 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     /* 阴影效果 */

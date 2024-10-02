@@ -4,13 +4,15 @@ import './css/LiteO2.css'
 import { register } from 'swiper/element/bundle'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUser, } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons'
 import LiteO2 from './LiteO2.vue'
-library.add(faUser,)
+import store from './store'
+library.add(faUser,faMagnifyingGlass)
 
 register()
 var app = createApp(LiteO2)
 app.component('font-awesome-icon', FontAwesomeIcon)
+app.use(store)
 
 var new_date = new Date(); //新建一个日期对象，默认现在的时间
 var old_date = new Date("2021-8-6 09:30:00"); //设置过去的一个时间点，"yyyy-MM-dd HH:mm:ss"格式化日期

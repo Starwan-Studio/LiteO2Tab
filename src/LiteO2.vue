@@ -1,19 +1,28 @@
 <template>
-
-
+  <!--
+  
+-->
+  <Toast :message="toastMessage" :visible="isToastVisible" />
   <div>
     <swiper-container init="false" class="mainSwiper" :swiper-theme-color="'#b1d9ec'">
       <swiper-slide>
 
+        <div style="overflow: hidden">
           <div class="negativepage">
-            <br><br>
-            <BlurryCard >
-              <span><h2>LiteO2 Tab 更新日志</h2></span>
-              <p>当前版本：{{version}}</p>
+          <br>
+          <BlurryCard v-if="showSetting"  style="overflow: hidden">
+            <SettingPage @savebtnClickTrigger="saveSetting" />
+          </BlurryCard>
+          <BlurryCard>
+            <span>
+              <h2>LiteO2 Tab 更新日志</h2>
+            </span>
+            <p>当前版本：{{ version }}</p>
 
-              <NoticeBox/>
-            </BlurryCard>
-          </div>
+            <NoticeBox />
+          </BlurryCard>
+        </div>
+        </div>
 
       </swiper-slide>
       <swiper-slide>
@@ -39,6 +48,10 @@ import AppFooter from './components/Footer.vue'
 import SearchPage from './components/SearchPage.vue'
 import BlurryCard from './components/NegativePageComponents/BlurryCard.vue'
 import NoticeBox from './components/NoticeBox.vue'
+import SettingPage from './components/NegativePageComponents/SettingPage.vue'
+import {useStore} from 'vuex'
+// eslint-disable-next-line
+import Toast from './components/GlobalComponents/Toast.vue'
 
 export default {
   name: 'LiteO2',
@@ -46,12 +59,18 @@ export default {
     AppFooter,
     SearchPage,
     BlurryCard,
-    NoticeBox
+    NoticeBox,
+    SettingPage,
+    Toast
   },
   data() {
     return {
       showModal: false,
-      ature: true
+      ature: true,
+      isToastVisible:false,
+      toastMessage:'',
+      toastTimer: null,
+      showSetting: false,
     }
   },
   methods: {
@@ -71,16 +90,32 @@ export default {
       return false;
     },
 
+    showToast(message) {
+      this.isToastVisible = true;
+      this.toastMessage = message;
+      this.toastTimer = setTimeout(()=>{
+        this.isToastVisible = false;
+      },3000)
+    },
+    saveSetting(){
+      clearInterval(this.toastTimer)
+      this.showToast('设置已保存')
+    }
   },
   computed: {
-    version(){
+    version() {
       return this.$version
     }
   },
   mounted() {
-
+    const store = useStore()
     if (!this.isMobileDevice()) {
-      document.body.style.backgroundImage = "url(" + require('@/assets/4af89134-3a01-4051-b130-ddd39cb14b19.png') + ")"
+      if(store.state.customBackground == ''){
+        document.body.style.backgroundImage = "url(" + require('@/assets/4af89134-3a01-4051-b130-ddd39cb14b19.png') + ")"
+      }else{
+        document.body.style.backgroundImage = "url(" + store.state.customBackground+ ")"
+      }
+
       document.body.style.backgroundSize = "cover"
     } else {
       document.body.style.backgroundImage = "url(" + require('@/assets/117253385_p0.png') + ")"
@@ -113,9 +148,19 @@ export default {
     })
 
     swiper.initialize()
+    document.addEventListener('mousedown', (event) => {
+      if (event.button === 2) {
+        event.preventDefault();
+        swiper.swiper.slideTo(2, 500, true)
+      }
+    })
+    document.addEventListener('contextmenu', (event) => {
+      event.preventDefault();
+    })
     document.querySelector(".mainSwiper").style.setProperty("--swiper-theme-color", "#b1d9ec")
     document.querySelector(".mainSwiper").shadowRoot.querySelector("div[part='pagination'").style.top = "0px";
     document.querySelector(".mainSwiper").shadowRoot.querySelector("div[part='pagination'").style.zIndex = "-1";
+    document.querySelector(".negativepage").style.height = (document.body.offsetHeight - document.querySelector(".mainSwiper").shadowRoot.querySelector(".swiper-pagination-bullet").offsetTop - document.querySelector(".mainSwiper").shadowRoot.querySelector(".swiper-pagination-bullet").offsetHeight - document.querySelector(".blurry-card").offsetTop - document.querySelector(".footer").offsetHeight) + "px";
   }
 }
 </script>
@@ -145,7 +190,6 @@ export default {
   /* 容器内边距 */
   overflow: scroll;
   overflow-y: scroll;
-  height: 100%;
   width: 100%;
 
 }
@@ -181,48 +225,61 @@ export default {
   opacity: 0;
 }
 
-.backdrop {  
-    position: fixed;  
-    top: 0;  
-    left: 0;  
-    right: 0;  
-    bottom: 0;  
-    background: rgba(255, 255, 255, 0.3); /* 半透明白色背景 */  
-    backdrop-filter: blur(10px) saturation(150%); /* 模糊背后的内容 */  
-    z-index: -1; /* 确保在内容之下 */  
-    pointer-events: none; /* 确保不会阻挡交互 */  
-  }  
-  
-  /* 滚动内容区域 */  
-  .content {  
-    position: relative;  
-    z-index: 1; /* 确保在毛玻璃背景之上 */  
-    height: 200vh; /* 使内容足够长以产生滚动条 */  
-    padding: 20px;  
-    box-sizing: border-box;  
-    background: rgba(255, 255, 255, 0.1); /* 轻微半透明背景，可选 */  
-  }  
-  
-  /* 自定义滚动条样式（webkit内核浏览器） */  
-  ::-webkit-scrollbar {  
-    width: 8px; /* 滚动条宽度 */  
-    height: 8px; /* 如果需要垂直滚动条也自定义，可以设置这个属性 */  
-  }  
-  
-  ::-webkit-scrollbar-thumb {  
-    background-color: #ffffff; /* 滚动条滑块颜色为白色 */  
-    border-radius: 4px; /* 圆角 */  
-    border: 2px solid rgba(0, 0, 0, 0); /* 透明边框，用于增加滑块大小（因为webkit滚动条有内置padding） */  
-  }  
-  
-  ::-webkit-scrollbar-thumb:hover {  
-    background-color: #f0f0f0; /* 滑块悬停时稍微变暗 */  
-  }  
-  
-  ::-webkit-scrollbar-track {  
-    background-color: #f0f0f081; /* 滚动条轨道透明 */  
-    border-radius: 4px; /* 圆角 */
-  }  
-  
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.3);
+  /* 半透明白色背景 */
+  backdrop-filter: blur(10px) saturation(150%);
+  /* 模糊背后的内容 */
+  z-index: -1;
+  /* 确保在内容之下 */
+  pointer-events: none;
+  /* 确保不会阻挡交互 */
+}
 
+/* 滚动内容区域 */
+.content {
+  position: relative;
+  z-index: 1;
+  /* 确保在毛玻璃背景之上 */
+  height: 200vh;
+  /* 使内容足够长以产生滚动条 */
+  padding: 20px;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.1);
+  /* 轻微半透明背景，可选 */
+}
+
+/* 自定义滚动条样式（webkit内核浏览器） */
+::-webkit-scrollbar {
+  width: 8px;
+  /* 滚动条宽度 */
+  height: 8px;
+  /* 如果需要垂直滚动条也自定义，可以设置这个属性 */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+  /* 滚动条滑块颜色为白色 */
+  border-radius: 4px;
+  /* 圆角 */
+  border: 2px solid rgba(0, 0, 0, 0);
+  /* 透明边框，用于增加滑块大小（因为webkit滚动条有内置padding） */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #f0f0f0;
+  /* 滑块悬停时稍微变暗 */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f0f0f081;
+  /* 滚动条轨道透明 */
+  border-radius: 4px;
+  /* 圆角 */
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
     <footer class="footer">
         <span>
-            <p id="footer-text">&copy; 2024 饹汐工作室</p>
+            <p id="footer-text">&copy; 2024 晚挽饹汐工作室</p>
         </span>
     </footer>
 </template>
@@ -12,14 +12,21 @@ export default {
     , mounted() {
         if(this.isMobileDevice()){
             document.getElementsByClassName("footer")[0].style.height = document.getElementsByClassName("footer")[0].clientHeight - 15 + "px";
-        document.getElementById("footer-text").innerHTML = "&copy; 2020-" + new Date().getFullYear() + " <a href='https://space.bilibili.com/586310538?from=liteo2tab' target='_blank'>林晚晚ss.</a> | "+'<a href="https://icp.gov.moe/?keyword=20235217" target="_blank">萌ICP备20235217号</a>';
+        // document.getElementById("footer-text").innerHTML = "&copy; 2020-" + new Date().getFullYear() + " <a href='https://space.bilibili.com/586310538?from=liteo2tab' target='_blank'>林晚晚ss.</a> | "+'<a href="https://icp.gov.moe/?keyword=20235217" target="_blank">萌ICP备20235217号</a>';
+        document.getElementById("footer-text").innerHTML = "&copy; 2020-" + new Date().getFullYear() + " <a href='https://space.bilibili.com/586310538?from=liteo2tab' target='_blank'>林晚晚ss.</a>" + " | "+ "于高山之巅，方见大河奔涌；于群峰之上，更觉长风浩荡。" + "</a> | "+'<a href="https://icp.gov.moe/?keyword=20235217" target="_blank">萌ICP备20235217号</a>';
+        document.getElementById("footer-text").style.fontSize = "15px";
         }else{
             document.getElementsByClassName("footer")[0].style.height = document.getElementsByClassName("footer")[0].clientHeight - 15 + "px";
-            fetch('https://v1.hitokoto.cn')
+            try{
+                fetch('https://v1.hitokoto.cn')
     .then(response => response.json())
     .then(data => {
       document.getElementById("footer-text").innerHTML = "&copy; 2020-" + new Date().getFullYear() + " <a href='https://space.bilibili.com/586310538?from=liteo2tab' target='_blank'>林晚晚ss.</a>" + " | <a href=' "+`https://hitokoto.cn/?uuid=${data.uuid}` +"' target='_blank' id='hitokoto_text'>" + data.hitokoto + "</a> | "+'<a href="https://icp.gov.moe/?keyword=20235217" target="_blank">萌ICP备20235217号</a>';
     })
+            }catch(e){
+                console.error(e)
+                document.getElementById("footer-text").innerHTML = "&copy; 2020-" + new Date().getFullYear() + " <a href='https://space.bilibili.com/586310538?from=liteo2tab' target='_blank'>林晚晚ss.</a>" + " | "+ "于高山之巅，方见大河奔涌；于群峰之上，更觉长风浩荡。" + "</a> | "+'<a href="https://icp.gov.moe/?keyword=20235217" target="_blank">萌ICP备20235217号</a>';
+            }
         
         }
     },
