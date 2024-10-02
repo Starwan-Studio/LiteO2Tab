@@ -166,21 +166,24 @@ textarea::placeholder {
     position:fixed;
     top: 100%;
     /* 紧接在输入框下方 */
-    background-color: white;
+    background-color: transparent;
     border: 1px solid #ccc;
     z-index: 1;
     width:50%;
-    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
+    overflow:hidden;
+    color:white;
 }
 
 .history-list ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    width:90%;
+    width:100%;
+    backdrop-filter:blur(15px);
 }
 
 .history-list li {
@@ -190,7 +193,7 @@ textarea::placeholder {
 }
 
 .history-list li:hover {
-    background-color: #eee;
+    background-color: #a0a0a062;
 }
 
 .historybox-enter-active, .historybox-leave-active {  

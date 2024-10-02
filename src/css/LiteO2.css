@@ -152,3 +152,6 @@ input[type="button"]:active {
     border: 2px solid #979797;
     background-color: #848484;
 }
+:root{
+    line-height: 1;
+}

@@ -9,19 +9,19 @@
 
         <div style="overflow: hidden">
           <div class="negativepage">
-          <br>
-          <BlurryCard v-if="showSetting"  style="overflow: hidden">
-            <SettingPage @savebtnClickTrigger="saveSetting" />
-          </BlurryCard>
-          <BlurryCard>
-            <span>
-              <h2>LiteO2 Tab 更新日志</h2>
-            </span>
-            <p>当前版本：{{ version }}</p>
+            <br>
+            <BlurryCard v-if="showSetting" style="overflow: hidden">
+              <SettingPage @savebtnClickTrigger="saveSetting" />
+            </BlurryCard>
+            <BlurryCard>
+              <span>
+                <h2>LiteO2 Tab 更新日志</h2>
+              </span>
+              <p>当前版本：{{ version }}</p>
 
-            <NoticeBox />
-          </BlurryCard>
-        </div>
+              <NoticeBox />
+            </BlurryCard>
+          </div>
         </div>
 
       </swiper-slide>
@@ -49,7 +49,6 @@ import SearchPage from './components/SearchPage.vue'
 import BlurryCard from './components/NegativePageComponents/BlurryCard.vue'
 import NoticeBox from './components/NoticeBox.vue'
 import SettingPage from './components/NegativePageComponents/SettingPage.vue'
-import {useStore} from 'vuex'
 // eslint-disable-next-line
 import Toast from './components/GlobalComponents/Toast.vue'
 
@@ -67,10 +66,10 @@ export default {
     return {
       showModal: false,
       ature: true,
-      isToastVisible:false,
-      toastMessage:'',
+      isToastVisible: false,
+      toastMessage: '',
       toastTimer: null,
-      showSetting: false,
+      showSetting: true,
     }
   },
   methods: {
@@ -93,13 +92,15 @@ export default {
     showToast(message) {
       this.isToastVisible = true;
       this.toastMessage = message;
-      this.toastTimer = setTimeout(()=>{
+      this.toastTimer = setTimeout(() => {
         this.isToastVisible = false;
-      },3000)
+      }, 3000)
     },
-    saveSetting(){
-      clearInterval(this.toastTimer)
-      this.showToast('设置已保存')
+    saveSetting() {
+      this.$localStorage.setItem("lo2set", {
+        customBackground: document.querySelector("input[name='wallpaper']").value
+      })
+      location.reload(true);
     }
   },
   computed: {
@@ -108,17 +109,31 @@ export default {
     }
   },
   mounted() {
-    const store = useStore()
+    if (!this.$localStorage.hasKeyInLocalStorage("lo2set")) {
+      this.$localStorage.setItem("lo2set", {
+        customBackground: ""
+      })
+    }
+
+    //初始化设置
+    document.querySelector("input[name='wallpaper']").value = this.$localStorage.getItem("lo2set").customBackground
+
     if (!this.isMobileDevice()) {
-      if(store.state.customBackground == ''){
+      if (this.$localStorage.getItem("lo2set").customBackground == "") {
         document.body.style.backgroundImage = "url(" + require('@/assets/4af89134-3a01-4051-b130-ddd39cb14b19.png') + ")"
-      }else{
-        document.body.style.backgroundImage = "url(" + store.state.customBackground+ ")"
+      } else {
+        document.body.style.backgroundImage = "url(" + this.$localStorage.getItem("lo2set").customBackground + ")"
       }
 
       document.body.style.backgroundSize = "cover"
     } else {
-      document.body.style.backgroundImage = "url(" + require('@/assets/117253385_p0.png') + ")"
+      if (this.$localStorage.getItem("lo2set").customBackground == "") {
+        document.body.style.backgroundImage = "url(" + require('@/assets/GWyNTyXbAAEIzx7.jpg') + ")"
+      }
+      else {
+        document.body.style.backgroundImage = "url(" + this.$localStorage.getItem("lo2set").customBackground + ")"
+      }
+
       document.body.style.backgroundSize = "cover"
     }
 
@@ -160,7 +175,7 @@ export default {
     document.querySelector(".mainSwiper").style.setProperty("--swiper-theme-color", "#b1d9ec")
     document.querySelector(".mainSwiper").shadowRoot.querySelector("div[part='pagination'").style.top = "0px";
     document.querySelector(".mainSwiper").shadowRoot.querySelector("div[part='pagination'").style.zIndex = "-1";
-    document.querySelector(".negativepage").style.height = (document.body.offsetHeight - document.querySelector(".mainSwiper").shadowRoot.querySelector(".swiper-pagination-bullet").offsetTop - document.querySelector(".mainSwiper").shadowRoot.querySelector(".swiper-pagination-bullet").offsetHeight - document.querySelector(".blurry-card").offsetTop - document.querySelector(".footer").offsetHeight) + "px";
+    document.querySelector(".negativepage").style.height = (document.body.offsetHeight - document.querySelector(".mainSwiper").shadowRoot.querySelector(".swiper-pagination-bullet").offsetTop - document.querySelector(".mainSwiper").shadowRoot.querySelector(".swiper-pagination-bullet").offsetHeight - document.querySelector(".blurry-card").offsetTop - document.querySelector(".footer").offsetHeight) * 0.8 + "px";
   }
 }
 </script>
