@@ -57,7 +57,7 @@ export default {
             clearTimeout(this.historyTimeout);
             this.historyTimeout = setTimeout(() => {
                 this.showHistory = false;
-            }, 300); // 延迟时间可以根据需要调整  
+            }, 2000); // 延迟时间可以根据需要调整  
         },
         onShowHistoryChange() {
             this.tot = setTimeout(()=>{

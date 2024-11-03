@@ -48,3 +48,7 @@ app.config.globalProperties.$isMobileDeviceVisit = MobileDeviceCheck()
 console.log("%c" + "LiteO2 on Vue     Version " + version + "  \n本站从本地优化制作至今共：" + days + "天 " + hours + "小时 \n © 2020-" + nowyear + " 晚挽工作室 仅作参考学习使用，禁止用于任何商业活动", "color: rgb(0,187,255);");
 
 app.mount('#app')
+
+if(window.location.href.includes("netlify")){
+  document.title = document.title + "镜像站"
+}
